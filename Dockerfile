@@ -21,7 +21,8 @@ RUN mvn package -DskipTests
 
 # --- Stage 2: Create the final lightweight application image ---
 # Sonuç imajı için sadece JRE içeren küçük bir base image kullanalım
-FROM openjdk:17-jre-slim
+#FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre-focal
 
 # Çalışma dizini
 WORKDIR /app

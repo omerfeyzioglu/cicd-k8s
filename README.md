@@ -64,7 +64,7 @@ cicd-k8s/
 ├── mvnw.cmd                   # Maven wrapper script (Windows)
 └── pom.xml                    # Maven Project Object Model
 
-```text
+```
 
 ## Prerequisites
 

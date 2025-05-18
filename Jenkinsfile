@@ -60,15 +60,33 @@ pipeline {
             }
         }
 
-        stage('Stage 6: Update K8s Deployment Image and Apply') {
-            steps {
-                script {
-                    echo "Updating Kubernetes deployment ${K8S_DEPLOYMENT_NAME} with image: ${env.FINAL_IMAGE_NAME}"
-                    bat "kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_CONTAINER_NAME}=${env.FINAL_IMAGE_NAME} --kubeconfig=${KUBECONFIG_PATH} --record"
-                    echo "Kubernetes deployment updated."
+//         stage('Stage 6: Update K8s Deployment Image and Apply') {
+//             steps {
+//                 script {
+//                     echo "Updating Kubernetes deployment ${K8S_DEPLOYMENT_NAME} with image: ${env.FINAL_IMAGE_NAME}"
+//                     bat "kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_CONTAINER_NAME}=${env.FINAL_IMAGE_NAME} --kubeconfig=${KUBECONFIG_PATH} --record"
+//                     echo "Kubernetes deployment updated."
+//                 }
+//             }
+//         }
+
+  stage('Stage 6: Apply K8s Deployment and Set Image') {
+                steps {
+                    script {
+                        echo "Applying Kubernetes deployment manifest: ${K8S_DEPLOYMENT_FILE}"
+                        // Önce deployment.yaml dosyasını uygula (yoksa oluşturur, varsa günceller)
+                        bat "kubectl apply -f ${K8S_DEPLOYMENT_FILE} --kubeconfig=\"${KUBECONFIG_PATH}\""
+
+                        // Kısa bir bekleme, deployment'ın API'de tam olarak işlenmesi için zaman tanıyabilir (opsiyonel)
+                        // sleep 3
+
+                        echo "Setting image for Kubernetes deployment ${K8S_DEPLOYMENT_NAME} to: ${env.FINAL_IMAGE_NAME}"
+                        // Sonra imajı set et
+                        bat "kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_CONTAINER_NAME}=${env.FINAL_IMAGE_NAME} --kubeconfig=\"${KUBECONFIG_PATH}\" --record"
+                        echo "Kubernetes deployment image updated."
+                    }
                 }
             }
-        }
 
         stage('Stage 7: Apply K8s Service') {
             steps {

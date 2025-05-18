@@ -64,6 +64,8 @@ cicd-k8s/
 ├── mvnw.cmd                   # Maven wrapper script (Windows)
 └── pom.xml                    # Maven Project Object Model
 
+```text
+
 ## Prerequisites
 
 Before running this project locally or setting up the pipeline, ensure you have the following installed and configured:

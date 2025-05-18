@@ -35,19 +35,27 @@ The project also demonstrates scaling the application to multiple pods within th
 
 ## Project Structure
 
-       cicd-k8s/
-├── .mvn/wrapper/              # Maven wrapper files
-├── k8s/                       # Kubernetes manifest files
+```text
+cicd-k8s/
+├── .mvn/
+│   └── wrapper/
+│       ├── maven-wrapper.jar
+│       └── maven-wrapper.properties
+├── k8s/
 │   ├── deployment.yaml        # K8s Deployment definition
 │   └── service.yaml           # K8s Service definition
-├── src/                       # Spring Boot application source code
+├── src/
 │   ├── main/
-│   │   ├── java/com/example/cicdk8sapp/ # Main application package
-│   │   │   ├── HelloController.java     # Sample REST controller
-│   │   │   └── CicdK8sApplication.java  # Spring Boot main class
+│   │   ├── java/
+│   │   │   └── com/example/cicdk8sapp/ # Main application package
+│   │   │       ├── HelloController.java     # Sample REST controller
+│   │   │       └── CicdK8sApplication.java  # Spring Boot main class
 │   │   └── resources/
 │   │       └── application.properties   # Spring Boot configuration (e.g., server.port)
 │   └── test/
+│       └── java/
+│           └── com/example/cicdk8sapp/
+│               └── CicdK8sApplicationTests.java
 ├── .gitattributes
 ├── .gitignore
 ├── Dockerfile                 # Instructions to build the Docker image
@@ -55,6 +63,7 @@ The project also demonstrates scaling the application to multiple pods within th
 ├── mvnw                       # Maven wrapper script (Linux/macOS)
 ├── mvnw.cmd                   # Maven wrapper script (Windows)
 └── pom.xml                    # Maven Project Object Model
+
 ## Prerequisites
 
 Before running this project locally or setting up the pipeline, ensure you have the following installed and configured:

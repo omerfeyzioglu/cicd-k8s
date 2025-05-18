@@ -5,8 +5,8 @@ pipeline {
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
         DOCKER_IMAGE_NAME = "omerfeyzioglu/cicd-k8s-app"
         KUBECONFIG_PATH = 'C:/Users/oomer/.kube/config'
-        K8S_DEPLOYMENT_NAME = 'cicd-k8s-deployment'
-        K8S_CONTAINER_NAME = 'cicd-k8s-container'
+        K8S_DEPLOYMENT_NAME = 'cicd-k8s-app-deployment'
+        K8S_CONTAINER_NAME = 'cicd-k8s-app-container'
         K8S_SERVICE_FILE = 'k8s/service.yaml'
     }
 

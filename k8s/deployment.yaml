@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicd-k8s-app-deployment # Deployment adı (proje adınıza göre güncelleyebilirsiniz)
+  labels:
+    app: cicd-k8s-app
+spec:
+  replicas: 1 # Başlangıçta 1 pod çalışsın
+  selector:
+    matchLabels:
+      app: cicd-k8s-app # Bu etiketle eşleşen pod'ları yönetecek
+  template:
+    metadata:
+      labels:
+        app: cicd-k8s-app # Pod'lara atanacak etiket
+    spec:
+      containers:
+        - name: cicd-k8s-app-container
+          image: omerfeyzioglu/cicd-k8s-app:latest # Jenkins pipeline'ında bu imaj push edilecek
+          ports:
+            - containerPort: 8081 # Uygulamanın konteyner içinde çalıştığı port

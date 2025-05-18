@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cicd-k8s-app-service # Servis adı (proje adınıza göre güncelleyebilirsiniz)
+spec:
+  selector:
+    app: cicd-k8s-app # Bu etiketle eşleşen pod'lara trafik yönlendirilecek (deployment.yaml'dakiyle aynı olmalı)
+  ports:
+    - protocol: TCP
+      port: 80       # Servisin cluster içinde dinleyeceği port (dışarıdan erişim için değil, cluster içi)
+      targetPort: 8081 # Pod'ların trafiği alacağı port (uygulamanın çalıştığı port)
+  type: NodePort     # Minikube ile dışarıdan erişim için NodePort veya LoadBalancer
+  # LoadBalancer kullanırsanız: minikube tunnel komutunu çalıştırmanız gerekebilir.

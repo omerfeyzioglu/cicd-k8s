@@ -21,7 +21,7 @@ pipeline {
         stage('Stage 2: Build and Create Jar') {
             steps {
                 echo 'Building the project and creating JAR file...'
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 echo 'Logging in to Docker Hub...'
                 withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS_ID, passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
-                    sh "echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin"
+                    bat "echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin"
                 }
                 echo 'Successfully logged in to Docker Hub.'
             }
@@ -64,7 +64,7 @@ pipeline {
             steps {
                 script {
                     echo "Updating Kubernetes deployment ${K8S_DEPLOYMENT_NAME} with image: ${env.FINAL_IMAGE_NAME}"
-                    sh "kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_CONTAINER_NAME}=${env.FINAL_IMAGE_NAME} --kubeconfig=${KUBECONFIG_PATH} --record"
+                    bat "kubectl set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_CONTAINER_NAME}=${env.FINAL_IMAGE_NAME} --kubeconfig=${KUBECONFIG_PATH} --record"
                     echo "Kubernetes deployment updated."
                 }
             }
@@ -73,7 +73,7 @@ pipeline {
         stage('Stage 7: Apply K8s Service') {
             steps {
                 echo 'Applying Kubernetes service configuration...'
-                sh "kubectl apply -f ${K8S_SERVICE_FILE} --kubeconfig=${KUBECONFIG_PATH}"
+                bat "kubectl apply -f ${K8S_SERVICE_FILE} --kubeconfig=${KUBECONFIG_PATH}"
                 echo 'Kubernetes service applied.'
             }
         }
